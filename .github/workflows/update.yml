@@ -51,7 +51,9 @@ jobs:
           test -s geo.mmdb
 
       - name: Run Update Script
-        run: python update.py
+        run: |
+          sed -i '/^    import os$/d' update.py
+          python update.py
 
       - name: Verify Generated Files
         run: |
