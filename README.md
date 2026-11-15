@@ -21,6 +21,7 @@ This project automatically aggregates, validates, and organizes public proxy sub
 
 | Category | Subscription URL |
 | :--- | :--- |
+| **Top 100 Nodes** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/top100.txt) |
 | **All Countries** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/sub) |
 | **Singapore (SG)** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/country/SG.txt) |
 | **Available Countries** | [📂 View Country List](COUNTRIES.md) |
