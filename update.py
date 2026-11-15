@@ -17,7 +17,8 @@ CHECK = os.getenv("CHECK", "1") == "1"
 MAX_PER_COUNTRY = int(os.getenv("MAX_PER_COUNTRY", "100"))
 MAX_TOTAL = int(os.getenv("MAX_TOTAL", "2000"))
 GEO_DB = os.getenv("GEO_DB", "geo.mmdb")
-REPO = os.getenv("GITHUB_REPOSITORY", "ath1t/my-subs")
+# Set repository path directly to ath1t/mysub
+REPO = os.getenv("GITHUB_REPOSITORY", "ath1t/mysub")
 
 
 def fetch(url):
@@ -96,10 +97,15 @@ def country_of(geo, ip):
     if geo is None or ip is None:
         return "XX", "Unknown"
     try:
-        c = geo.get(ip)["country"]
-        return c["iso_code"], c["names"]["en"]
+        record = geo.get(ip)
+        if record and "country" in record:
+            c = record["country"]
+            iso = c.get("iso_code", "XX")
+            name = c.get("names", {}).get("en", "Unknown")
+            return iso, name
     except Exception:
-        return "XX", "Unknown"
+        pass
+    return "XX", "Unknown"
 
 
 def flag(cc):
@@ -118,6 +124,10 @@ def rename(link, name):
 
 
 def main():
+    if not os.path.exists("sources.txt"):
+        print("sources.txt not found!", file=sys.stderr)
+        return
+
     urls = [l.strip() for l in open("sources.txt") if l.strip() and not l.startswith("#")]
     seen, nodes = set(), []
     for url in urls:
@@ -161,12 +171,15 @@ def main():
 
     os.makedirs("country", exist_ok=True)
     for f in os.listdir("country"):
-        os.remove(os.path.join("country", f))
-    open("nodes.txt", "w").write("\n".join(all_nodes) + "\n")
-    open("sub", "w").write(b64e("\n".join(all_nodes)))
+        fp = os.path.join("country", f)
+        if os.path.isfile(fp):
+            os.remove(fp)
+
+    open("nodes.txt", "w", encoding="utf-8").write("\n".join(all_nodes) + "\n")
+    open("sub", "w", encoding="utf-8").write(b64e("\n".join(all_nodes)))
     for cc, lst in per_country.items():
         if cc != "XX":
-            open(f"country/{cc}.txt", "w").write(b64e("\n".join(lst)))
+            open(f"country/{cc}.txt", "w", encoding="utf-8").write(b64e("\n".join(lst)))
 
     base = f"https://raw.githubusercontent.com/{REPO}/main"
     rows = ["# Subscription links", "",
@@ -174,8 +187,9 @@ def main():
             "| Country | Nodes | Subscription link |", "| --- | --: | --- |"]
     for cc, lst in sorted(per_country.items(), key=lambda kv: -len(kv[1])):
         if cc != "XX":
-            rows.append(f"| {flag(cc)} {names[cc]} ({cc}) | {len(lst)} | `{base}/country/{cc}.txt` |")
-    open("COUNTRIES.md", "w").write("\n".join(rows) + "\n")
+            rows.append(f"| {flag(cc)} {names.get(cc, 'Unknown')} ({cc}) | {len(lst)} | `{base}/country/{cc}.txt` |")
+    open("COUNTRIES.md", "w", encoding="utf-8").write("\n".join(rows) + "\n")
 
 
-main()
+if __name__ == "__main__":
+    main()
