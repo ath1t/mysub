@@ -4,12 +4,10 @@
 
 ## လင့်ခ်များ
 
-အောက်ပါ `YOUR-USERNAME` ကို သင့် GitHub username ဖြင့် အစားထိုးပါ။
-
 | ရွေးချယ်မှု | လင့်ခ် |
 | --- | --- |
-| နိုင်ငံအားလုံး | `https://raw.githubusercontent.com/YOUR-USERNAME/my-subs/main/sub` |
-| နိုင်ငံတစ်ခု (ဥပမာ - အမေရိကန်) | `https://raw.githubusercontent.com/YOUR-USERNAME/my-subs/main/country/US.txt` |
+| နိုင်ငံအားလုံး | `https://raw.githubusercontent.com/ath1t/my-subs/main/sub` |
+| နိုင်ငံတစ်ခု (ဥပမာ - အမေရိကန်) | `https://raw.githubusercontent.com/ath1t/my-subs/main/country/US.txt` |
 | နိုင်ငံစာရင်းအပြည့်အစုံ | [COUNTRIES.md](COUNTRIES.md) |
 
 နိုင်ငံကုဒ်များ - `US` အမေရိကန်၊ `JP` ဂျပန်၊ `SG` စင်ကာပူ၊ `DE` ဂျာမနီ၊ `GB` ယူနိုက်တက်ကင်းဒမ်း စသည်ဖြင့် ဖြစ်ပါသည်။

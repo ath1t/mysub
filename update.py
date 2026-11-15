@@ -17,7 +17,7 @@ CHECK = os.getenv("CHECK", "1") == "1"
 MAX_PER_COUNTRY = int(os.getenv("MAX_PER_COUNTRY", "100"))
 MAX_TOTAL = int(os.getenv("MAX_TOTAL", "2000"))
 GEO_DB = os.getenv("GEO_DB", "geo.mmdb")
-REPO = os.getenv("GITHUB_REPOSITORY", "YOUR-USERNAME/my-subs")
+REPO = os.getenv("GITHUB_REPOSITORY", "ath1t/my-subs")
 
 
 def fetch(url):
