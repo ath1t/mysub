@@ -25,7 +25,9 @@ Country codes include: `US` (USA), `JP` (Japan), `SG` (Singapore), `DE` (Germany
 - The use of VPNs is restricted in some countries. Please check the laws of your country.
 
 ## Sources
+Internet 🛜 
 
-[barry-far/V2ray-Config](https://github.com/barry-far/V2ray-config) · [zhuhaiuk/free-nodes](https://github.com/zhuhaiuk/free-nodes) · [Au1rxx/free-vpn-subscriptions](https://github.com/Au1rxx/free-vpn-subscriptions) · [Pawdroid/Free-servers](https://github.com/Pawdroid/Free-servers)
+
+[
 
 Country identification uses MaxMind GeoLite2 data (mirrored at [P3TERX/GeoLite.mmdb](https://github.com/P3TERX/GeoLite.mmdb)).
