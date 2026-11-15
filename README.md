@@ -1,32 +1,31 @@
-# အခမဲ့ Subscription စုစည်းမှု (နိုင်ငံအလိုက်ရွေးချယ်ရန်)
+# Collection of Free Subscriptions (Select by Country)
 
-အများပြည်သူသုံး အခမဲ့ node subscription များကို GitHub မှ စုစည်းပြီး ၆ နာရီတစ်ကြိမ် အလိုအလျောက် update လုပ်ပါသည်။ မတုံ့ပြန်သော node များကို ဖယ်ထုတ်ပြီး နိုင်ငံအလိုက် ခွဲထားပါသည်။
+This collection of free, public-use node subscriptions is aggregated from GitHub and automatically updated every 6 hours. Non-responsive nodes are removed, and the remaining nodes are categorized by country.
 
-## လင့်ခ်များ
+## Links
 
-| ရွေးချယ်မှု | လင့်ခ် |
+| Selection | Link |
 | --- | --- |
-| နိုင်ငံအားလုံး | `https://raw.githubusercontent.com/ath1t/my-subs/main/sub` |
-| နိုင်ငံတစ်ခု (ဥပမာ - အမေရိကန်) | `https://raw.githubusercontent.com/ath1t/my-subs/main/country/US.txt` |
-| နိုင်ငံစာရင်းအပြည့်အစုံ | [COUNTRIES.md](COUNTRIES.md) |
+| All Countries | `https://raw.githubusercontent.com/ath1t/my-subs/main/sub` |
+| Specific Country (e.g., USA) | `https://raw.githubusercontent.com/ath1t/my-subs/main/country/US.txt` |
+| Full List of Countries | [COUNTRIES.md](COUNTRIES.md) |
 
-နိုင်ငံကုဒ်များ - `US` အမေရိကန်၊ `JP` ဂျပန်၊ `SG` စင်ကာပူ၊ `DE` ဂျာမနီ၊ `GB` ယူနိုက်တက်ကင်းဒမ်း စသည်ဖြင့် ဖြစ်ပါသည်။
+Country codes include: `US` (USA), `JP` (Japan), `SG` (Singapore), `DE` (Germany), `GB` (United Kingdom), etc.
 
-## အသုံးပြုနည်း
+## How to Use
 
-1. v2rayNG / v2rayN / Hiddify / Shadowrocket စသည့် client တစ်ခုကို download လုပ်ပါ။
-2. လိုချင်သော နိုင်ငံ၏ လင့်ခ်ကို **Subscription** အဖြစ် ထည့်ပါ။
-3. Subscription ကို update လုပ်ပြီး latency စမ်းသပ်ကာ အမြန်ဆုံး node ကို ရွေးပါ။
+1. Download a client such as v2rayNG, v2rayN, Hiddify, or Shadowrocket.
+2. Add the link for your desired country as a **Subscription**.
+3. Update the subscription, test the latency, and select the fastest node.
 
-## သတိပြုရန်
+## Important Notes
 
-- ဤ node များကို မသိသောသူများက ဖွင့်ထားသည်။ သင့် traffic ကို မြင်နိုင်၊ မှတ်တမ်းတင်နိုင်သည်။ ဘဏ်၊ အီးမေးလ် စသည့် အရေးကြီးသော အကောင့်များကို မဝင်ပါနှင့်။
-- နိုင်ငံသတ်မှတ်ချက်သည် server IP အပေါ် မူတည်သည်။ CDN (ဥပမာ Cloudflare) နောက်ကွယ်ရှိ node များသည် မမှန်ကန်နိုင်ပါ။
-- Node အချို့ သုံးမရနိုင်ပါ။ အခြား node ကို စမ်းပါ။
-- VPN သုံးခြင်းကို ကန့်သတ်ထားသော နိုင်ငံများ ရှိပါသည်။ သင့်နိုင်ငံ၏ ဥပဒေကို စစ်ဆေးပါ။
+- These nodes are hosted by unknown individuals. They may be able to view or log your traffic. Do not access sensitive accounts, such as those for banking or email.
+- Country classification is based on the server's IP address. Nodes located behind a CDN (e.g., Cloudflare) may not be correctly categorized. - Some nodes may not be functional; please try a different one.
+- The use of VPNs is restricted in some countries. Please check the laws of your country.
 
-## ရင်းမြစ်များ
+## Sources
 
 [barry-far/V2ray-Config](https://github.com/barry-far/V2ray-config) · [zhuhaiuk/free-nodes](https://github.com/zhuhaiuk/free-nodes) · [Au1rxx/free-vpn-subscriptions](https://github.com/Au1rxx/free-vpn-subscriptions) · [Pawdroid/Free-servers](https://github.com/Pawdroid/Free-servers)
 
-နိုင်ငံ ခွဲခြားမှုတွင် MaxMind GeoLite2 data ကို အသုံးပြုထားသည် (ကော်ပီကူး mirror - [P3TERX/GeoLite.mmdb](https://github.com/P3TERX/GeoLite.mmdb))။
+Country identification uses MaxMind GeoLite2 data (mirrored at [P3TERX/GeoLite.mmdb](https://github.com/P3TERX/GeoLite.mmdb)).
