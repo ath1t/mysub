@@ -12,5 +12,5 @@ https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ra
 https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
 # Danialsamadi/v2go
 https://raw.githubusercontent.com/Danialsamadi/v2go/main/Splitted-By-Country/SG.txt
-# Au1rxx/free
+# Au1rxx/free-vpn-subscriptions/raw
 https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/by-country/v2ray-base64-SG.txt
