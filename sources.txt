@@ -1,16 +1,22 @@
-# One subscription URL per line. Only public sources. Credit them in README.
+# One subscription URL per line. Only public sources.
+
 # barry-far/V2ray-Config (MIT)
 https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub1.txt
 https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub2.txt
 https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub3.txt
 https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub4.txt
+
 # zhuhaiuk/free-nodes
 https://raw.githubusercontent.com/zhuhaiuk/free-nodes/main/nodes.txt
+
 # Au1rxx/free-vpn-subscriptions
 https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ray-base64.txt
+
 # Pawdroid/Free-servers
 https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
+
 # Danialsamadi/v2go
 https://raw.githubusercontent.com/Danialsamadi/v2go/main/Splitted-By-Country/SG.txt
-# Au1rxx/free-vpn-subscriptions/raw
-https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/by-country/v2ray-base64-SG.txt
+
+# Au1rxx/free-vpn-subscriptions/raw (SG)
+https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/by-country/v2ray-base64-SG.txt
