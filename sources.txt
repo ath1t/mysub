@@ -10,7 +10,7 @@ https://raw.githubusercontent.com/zhuhaiuk/free-nodes/main/nodes.txt
 https://raw.githubusercontent.com/Au1rxx/free-vpn-subscriptions/main/output/v2ray-base64.txt
 # Pawdroid/Free-servers
 https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub
-# V2GO
+# Danialsamadi/v2go
 https://raw.githubusercontent.com/Danialsamadi/v2go/main/Splitted-By-Country/SG.txt
 # Au1rxx/free
 https://github.com/Au1rxx/free-vpn-subscriptions/raw/main/output/by-country/v2ray-base64-SG.txt
