@@ -1,16 +1,33 @@
+
 name: update-subscriptions
 
 on:
   schedule:
-    - cron: "0 * * * *" # Every 1 hour (နာရီတိုင်းတွင် တစ်ကြိမ် Run မည်)
+    - cron: "0 * * * *" # Every hour (UTC)
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: update-subscriptions
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      CHECK: "1"
+      MAX_PER_COUNTRY: "100"
+      MAX_TOTAL: "2000"
+      TOP_N: "100"
+      PING_ATTEMPTS: "3"
+      PING_TIMEOUT: "4"
+      MAX_WORKERS: "100"
+      GEO_DB: "geo.mmdb"
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,19 +36,42 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
-      - name: Install GeoIP reader and database
+      - name: Install Dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install maxminddb
-          curl -sL -o geo.mmdb https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-Country.mmdb
+
+      - name: Download GeoIP Database
+        run: |
+          curl -fSL --retry 3 \
+            -o geo.mmdb \
+            https://github.com/P3TERX/GeoLite.mmdb/releases/latest/download/GeoLite2-Country.mmdb
+
+          test -s geo.mmdb
 
       - name: Run Update Script
-        run: python update.py # (သင့် Python script ဖိုင်နာမည်အတိုင်း ထည့်ပါ)
+        run: python update.py
+
+      - name: Verify Generated Files
+        run: |
+          test -s sub
+          test -s nodes.txt
+          test -s COUNTRIES.md
+          test -s top100.txt
+          test -s TOP100.md
 
       - name: Commit and Push Changes
         run: |
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A sub nodes.txt country COUNTRIES.md
-          git diff --cached --quiet || git commit -m "Auto-update subscriptions $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git push
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add sub nodes.txt country/ COUNTRIES.md top100.txt TOP100.md
+
+          if git diff --cached --quiet; then
+            echo "No changes detected."
+          else
+            git commit -m "Auto-update subscriptions $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
