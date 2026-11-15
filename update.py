@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 """
@@ -569,7 +568,7 @@ def collect_sources(urls):
         "failed": 0,
     }
 
-    print("\n========== SOURCE HEALTH ==========\n")
+    print("\n========== SOURCE HEALTH ==========")
 
     for url in urls:
 
@@ -852,8 +851,6 @@ def main():
     # --------------------------------------------------------
     # WRITE OUTPUTS
     # --------------------------------------------------------
-
-    import os
 
     os.makedirs("country", exist_ok=True)
 
