@@ -2,9 +2,10 @@
 
 # 🌐 Free Public Proxy Subscription Collection
 
-A curated collection of publicly available proxy node subscriptions, automatically updated every 6 hours.
+A curated collection of publicly available proxy node subscriptions, automatically updated every hour.
 
-[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%206%20Hours-brightgreen?style=flat-square&logo=github)](https://github.com/ath1t/my-subs)
+[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%20Hour-brightgreen?style=flat-square&logo=github)](https://github.com/ath1t/mysub)
+[![Web UI](https://img.shields.io/badge/Web%20UI-Vercel-blue?style=flat-square&logo=vercel)](https://mysub-theta.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 </div>
@@ -13,44 +14,38 @@ A curated collection of publicly available proxy node subscriptions, automatical
 
 ## 📋 Overview
 
-This project automatically aggregates, validates, and organizes public proxy subscriptions from various open-source repositories. Dead or unresponsive nodes are periodically purged, and active servers are categorized by geographic location for effortless access.
+This project automatically aggregates, validates, and organizes public proxy subscriptions from various open-source repositories, running automatic ping/latency checks optimized for low latency. Dead nodes are purged, and active servers are categorized by geographic location.
 
 ---
 
-## 🔗 Subscription Links
+## 🌐 Live Web UI Dashboard
+
+> 🚀 **Access the Web Dashboard:** [https://mysub-theta.vercel.app](https://mysub-theta.vercel.app)
+> 
+> *Visit the live web app to view interactive latency charts, copy country-specific subscription links, scan QR codes instantly, and view step-by-step usage guides.*
+
+---
+
+## 🔗 Direct Subscription Links
 
 | Category | Subscription URL |
 | :--- | :--- |
-| **Top 100 Nodes** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/top100.txt) |
-| **All Countries** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/sub) |
-| **Singapore (SG)** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/country/SG.txt) |
+| **Top 100 Best Ping Nodes** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/sub) |
+| **All Raw Nodes** | [🔗 Copy Link](https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt) |
 | **Available Countries** | [📂 View Country List](COUNTRIES.md) |
-
-### 🌍 Supported Country Codes
-Country-specific subscriptions follow standard **ISO 3166-1 alpha-2** codes:
-
-| Code | Country |
-| :---: | :--- |
-| **US** | United States |
-| **JP** | Japan |
-| **SG** | Singapore |
-| **DE** | Germany |
-| **GB** | United Kingdom |
-
-> 📌 *See [COUNTRIES.md](COUNTRIES.md) for the complete list of available country codes.*
 
 ---
 
 ## 🚀 Getting Started
 
 1. **Install a compatible client:**
-   * **Android:** [v2rayNG](https://github.com/2dust/v2rayNG)
+   * **Android:** [v2rayNG](https://github.com/2dust/v2rayNG) or [NekoBox](https://github.com/MatsuriDayo/NekoBoxForAndroid)
    * **Windows:** [v2rayN](https://github.com/2dust/v2rayN)
    * **Cross-platform:** [Hiddify](https://github.com/Hiddify/hiddify-app)
-   * **iOS:** Shadowrocket (App Store)
-2. **Import the subscription:** Copy the subscription URL for your preferred region and add it to your client's subscription settings.
+   * **iOS:** Shadowrocket (App Store) or Stash
+2. **Import the subscription:** Copy the universal or country-specific subscription URL (or scan the QR code from the Web UI) and add it to your client's subscription settings.
 3. **Update & sync:** Refresh the subscription feed to fetch the latest available nodes.
-4. **Test & connect:** Run a latency check, pick a responsive node, and connect.
+4. **Test & connect:** Pick a responsive node with low latency and connect.
 
 ---
 
