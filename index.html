@@ -15,6 +15,8 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,8 +49,14 @@
             margin-bottom: 16px; 
             display: flex; 
             align-items: center; 
-            gap: 8px; 
+            justify-content: space-between;
             color: var(--text-main);
+        }
+
+        .card h2 span.title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .sub-box { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -82,6 +90,7 @@
         .btn:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-outline:hover { background: var(--border-color); }
+        .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
 
         .qr-container { text-align: center; margin-top: 20px; display: none; }
         .qr-container img { background: white; padding: 8px; border-radius: 8px; width: 160px; height: 160px; }
@@ -91,10 +100,28 @@
         .stat-val { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
         .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .node-list { max-height: 220px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 8px; border: 1px solid var(--border-color); }
-        .node-item { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-family: monospace; }
+        .node-list { max-height: 320px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 8px; border: 1px solid var(--border-color); }
+        .node-item { padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: monospace; }
         .node-item:last-child { border-bottom: none; }
-        .badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+        .node-info { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; }
+        .node-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
+        
+        .node-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+        .proto-tag {
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; }
+        .badge.warn { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+        .badge.slow { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
 
         .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
         .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 14px; border-radius: 8px; }
@@ -135,7 +162,7 @@
 
     <!-- Universal Subscription Card -->
     <div class="card">
-        <h2>🌐 Universal Subscription (Top 100)</h2>
+        <h2><span class="title-group">🌐 Universal Subscription (Top 100)</span></h2>
         <div class="sub-box">
             <input type="text" id="mainSubUrl" class="sub-input" readonly>
             <button class="btn" onclick="copyText('mainSubUrl', this)">Copy</button>
@@ -148,9 +175,9 @@
 
     <!-- Country-Specific Subscription Card -->
     <div class="card">
-        <h2>🗺️ Country Selection</h2>
+        <h2><span class="title-group">🗺️ Country Selection</span></h2>
         <div class="sub-box" style="margin-bottom: 12px;">
-            <select id="countrySelect" onchange="updateCountryLink()">
+            <select id="countrySelect" onchange="onCountryChange()">
                 <option value="">-- Loading Countries... --</option>
             </select>
         </div>
@@ -166,7 +193,7 @@
 
     <!-- Latency Distribution Chart Card -->
     <div class="card">
-        <h2>📊 Latency Distribution</h2>
+        <h2><span class="title-group">📊 Latency Distribution</span></h2>
         <div style="position: relative; height: 180px; width: 100%;">
             <canvas id="latencyChart"></canvas>
         </div>
@@ -174,7 +201,7 @@
 
     <!-- How to Use Guide Card -->
     <div class="card">
-        <h2>📖 လမ်းညွှန်ချက် (How to Use)</h2>
+        <h2><span class="title-group">📖 လမ်းညွှန်ချက် (How to Use)</span></h2>
         <div class="guide-grid">
             <div class="guide-item">
                 <h3>🤖 Android</h3>
@@ -202,7 +229,10 @@
     </div>
 
     <div class="card">
-        <h2>🚀 Live Nodes Preview</h2>
+        <h2>
+            <span class="title-group">🚀 Live Nodes Preview</span>
+            <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Refresh</button>
+        </h2>
         <div class="node-list" id="nodePreviewList">
             <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading nodes...</div>
         </div>
@@ -218,6 +248,9 @@
     const mainUrl = origin + '/sub';
     document.getElementById('mainSubUrl').value = mainUrl;
 
+    let allParsedNodes = [];
+    let myChart = null;
+
     function copyText(elementId, btnElement) {
         const input = document.getElementById(elementId);
         if (!input.value) return;
@@ -230,6 +263,18 @@
             btnElement.innerText = originalText;
             btnElement.style.background = "";
         }, 2000);
+    }
+
+    function copyCustomText(text, btnElement) {
+        if (!text) return;
+        navigator.clipboard.writeText(text);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = "Copied ✓";
+        btnElement.style.background = "#10b981";
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+            btnElement.style.background = "";
+        }, 1500);
     }
 
     function toggleQR(boxId, inputId) {
@@ -246,14 +291,17 @@
         const cc = select.value;
         const input = document.getElementById('countrySubUrl');
         if (cc) {
-            input.value = `https://raw.githubusercontent.com/ath1t/mysub/main/country/${cc}.txt`;
+            input.value = `https://cdn.jsdelivr.net/gh/ath1t/mysub@main/country/${cc}.txt`;
         } else {
             input.value = '';
             document.getElementById('qrCountryBox').style.display = 'none';
         }
     }
 
-    let myChart = null;
+    function onCountryChange() {
+        updateCountryLink();
+        renderNodeList();
+    }
 
     function renderChart(brackets) {
         const ctx = document.getElementById('latencyChart').getContext('2d');
@@ -282,7 +330,8 @@
 
     function decodeBase64UTF8(str) {
         try {
-            const binString = atob(str.replace(/-/g, '+').replace(/_/g, '/'));
+            const cleanStr = str.trim().replace(/-/g, '+').replace(/_/g, '/');
+            const binString = atob(cleanStr);
             const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
             return new TextDecoder().decode(bytes);
         } catch (e) {
@@ -290,10 +339,137 @@
         }
     }
 
+    function parseProxyNode(link) {
+        let protocol = "PROXY";
+        let name = "Unnamed Node";
+
+        const protoMatch = link.match(/^([a-zA-Z0-9+-]+):\/\//);
+        if (protoMatch) {
+            protocol = protoMatch[1].toUpperCase();
+        }
+
+        try {
+            if (link.startsWith('vmess://')) {
+                const jsonStr = decodeBase64UTF8(link.slice(8));
+                if (jsonStr) {
+                    const obj = JSON.parse(jsonStr);
+                    name = obj.ps || obj.add || "VMess Node";
+                }
+            } else if (link.startsWith('ssr://')) {
+                const decoded = decodeBase64UTF8(link.slice(6));
+                const remarkMatch = decoded.match(/remarks=([^&]+)/);
+                if (remarkMatch) {
+                    name = decodeBase64UTF8(remarkMatch[1]) || "SSR Node";
+                }
+            } else if (link.includes('#')) {
+                const rawFragment = link.split('#').slice(1).join('#');
+                try {
+                    name = decodeURIComponent(rawFragment);
+                } catch {
+                    name = rawFragment;
+                }
+            } else {
+                const hostMatch = link.match(/@([^:/?#]+)/);
+                if (hostMatch) name = hostMatch[1];
+            }
+        } catch (e) {
+            name = "Parsed Node";
+        }
+
+        let countryCode = "";
+        const ccMatch = name.match(/\b([A-Z]{2})-\d{2,3}\b/);
+        if (ccMatch && ccMatch[1] !== 'XX') {
+            countryCode = ccMatch[1];
+        }
+
+        let pingVal = 9999;
+        const pingMatch = name.match(/\[([\d.]+)\s*ms\]/i);
+        let pingText = 'Active';
+        let badgeClass = 'badge';
+
+        if (pingMatch) {
+            pingVal = parseFloat(pingMatch[1]);
+            pingText = `${pingVal} ms`;
+            if (pingVal < 50) {
+                badgeClass = 'badge';
+            } else if (pingVal < 100) {
+                badgeClass = 'badge';
+            } else if (pingVal < 200) {
+                badgeClass = 'badge warn';
+            } else {
+                badgeClass = 'badge slow';
+            }
+        }
+
+        return {
+            raw: link,
+            protocol,
+            name: name.trim() || "Unknown Node",
+            countryCode,
+            pingVal,
+            pingText,
+            badgeClass
+        };
+    }
+
+    function renderNodeList() {
+        const listContainer = document.getElementById('nodePreviewList');
+        listContainer.innerHTML = '';
+
+        const selectedCC = document.getElementById('countrySelect').value;
+        const filtered = selectedCC 
+            ? allParsedNodes.filter(n => n.countryCode === selectedCC)
+            : allParsedNodes;
+
+        if (filtered.length === 0) {
+            listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">No nodes found for this filter.</div>';
+            return;
+        }
+
+        filtered.slice(0, 50).forEach(node => {
+            const div = document.createElement('div');
+            div.className = 'node-item';
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'node-info';
+
+            const protoSpan = document.createElement('span');
+            protoSpan.className = 'proto-tag';
+            protoSpan.textContent = node.protocol;
+
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'node-name';
+            nameSpan.textContent = node.name;
+            nameSpan.title = node.name;
+
+            infoDiv.appendChild(protoSpan);
+            infoDiv.appendChild(nameSpan);
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'node-actions';
+
+            const badgeSpan = document.createElement('span');
+            badgeSpan.className = node.badgeClass;
+            badgeSpan.textContent = node.pingText;
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'btn btn-outline btn-sm';
+            copyBtn.textContent = 'Copy';
+            copyBtn.onclick = (e) => copyCustomText(node.raw, copyBtn);
+
+            actionsDiv.appendChild(badgeSpan);
+            actionsDiv.appendChild(copyBtn);
+
+            div.appendChild(infoDiv);
+            div.appendChild(actionsDiv);
+            listContainer.appendChild(div);
+        });
+    }
+
     async function loadCountriesFromMarkdown() {
         const select = document.getElementById('countrySelect');
         try {
-            const res = await fetch('https://raw.githubusercontent.com/ath1t/mysub/main/COUNTRIES.md?t=' + Date.now());
+            const res = await fetch('https://cdn.jsdelivr.net/gh/ath1t/mysub@main/COUNTRIES.md?t=' + Date.now());
             if (!res.ok) throw new Error("COUNTRIES.md not found");
             const mdText = await res.text();
             
@@ -309,7 +485,7 @@
             }
 
             if (countries.length > 0) {
-                select.innerHTML = '<option value="">-- Select Country --</option>';
+                select.innerHTML = '<option value="">-- All Countries (Default) --</option>';
                 countries.forEach(c => {
                     const opt = document.createElement('option');
                     opt.value = c.code;
@@ -324,44 +500,41 @@
     }
 
     async function loadData() {
+        const listContainer = document.getElementById('nodePreviewList');
+        listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading nodes...</div>';
+
         const mdLoaded = await loadCountriesFromMarkdown();
 
         try {
-            const res = await fetch('https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt?t=' + Date.now());
+            const res = await fetch('https://cdn.jsdelivr.net/gh/ath1t/mysub@main/nodes.txt?t=' + Date.now());
             if (!res.ok) throw new Error("Failed to fetch nodes.txt");
-            const text = await res.text();
-            const lines = text.trim().split('\n').filter(l => l.trim() !== '');
-            
-            document.getElementById('totalNodes').innerText = lines.length;
-            
-            const listContainer = document.getElementById('nodePreviewList');
-            listContainer.innerHTML = '';
+            let text = (await res.text()).trim();
 
+            if (!text.includes('://')) {
+                const decodedText = decodeBase64UTF8(text);
+                if (decodedText.includes('://')) {
+                    text = decodedText;
+                }
+            }
+
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l !== '' && l.includes('://'));
+            document.getElementById('totalNodes').innerText = lines.length;
+
+            allParsedNodes = [];
             let lowestPing = null;
             const countriesSet = new Set();
             const brackets = { l50: 0, l100: 0, l200: 0, l500: 0, gt500: 0 };
 
-            lines.forEach((link, idx) => {
-                let name = "Unknown Node";
-                try {
-                    if (link.startsWith('vmess://')) {
-                        const jsonStr = decodeBase64UTF8(link.slice(8));
-                        const obj = JSON.parse(jsonStr);
-                        name = obj.ps || "VMess Node";
-                    } else if (link.includes('#')) {
-                        name = decodeURIComponent(link.split('#')[1]);
-                    }
-                } catch (e) {}
+            lines.forEach((link) => {
+                const nodeObj = parseProxyNode(link);
+                allParsedNodes.push(nodeObj);
 
-                const ccMatch = name.match(/\b([A-Z]{2})-\d{2,3}\b/);
-                if (ccMatch && ccMatch[1] !== 'XX') {
-                    countriesSet.add(ccMatch[1]);
+                if (nodeObj.countryCode) {
+                    countriesSet.add(nodeObj.countryCode);
                 }
 
-                const pingMatch = name.match(/\[([\d.]+)ms\]/);
-                const pingText = pingMatch ? `${pingMatch[1]} ms` : 'Active';
-                if (pingMatch) {
-                    const p = parseFloat(pingMatch[1]);
+                const p = nodeObj.pingVal;
+                if (p < 9999) {
                     if (lowestPing === null || p < lowestPing) lowestPing = p;
                     if (p < 50) brackets.l50++;
                     else if (p < 100) brackets.l100++;
@@ -371,20 +544,13 @@
                 } else {
                     brackets.gt500++;
                 }
-
-                if (idx < 15) {
-                    const div = document.createElement('div');
-                    div.className = 'node-item';
-                    div.innerHTML = `<span>${name}</span><span class="badge">${pingText}</span>`;
-                    listContainer.appendChild(div);
-                }
             });
 
             renderChart(brackets);
 
             if (!mdLoaded) {
                 const select = document.getElementById('countrySelect');
-                select.innerHTML = '<option value="">-- Select Country --</option>';
+                select.innerHTML = '<option value="">-- All Countries (Default) --</option>';
                 Array.from(countriesSet).sort().forEach(cc => {
                     const opt = document.createElement('option');
                     opt.value = cc;
@@ -397,9 +563,15 @@
             if (lowestPing !== null) {
                 document.getElementById('fastestPing').innerText = lowestPing + ' ms';
             }
+
+            renderNodeList();
+
         } catch (err) {
-            document.getElementById('nodePreviewList').innerHTML = 
-                '<div style="text-align: center; color: #ef4444; padding: 20px;">Failed to load nodes.</div>';
+            listContainer.innerHTML = `
+                <div style="text-align: center; color: #ef4444; padding: 20px;">
+                    <p style="margin-bottom: 10px;">Failed to load nodes (${err.message}).</p>
+                    <button class="btn btn-outline btn-sm" onclick="loadData()">Try Again</button>
+                </div>`;
         }
     }
 
