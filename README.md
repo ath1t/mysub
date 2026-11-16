@@ -2,10 +2,10 @@
 
 # 🌐 Free Public Proxy Subscription Collection
 
-A curated collection of publicly available proxy node subscriptions, automatically updated every hour.
+A curated collection of publicly available proxy node subscriptions, automatically updated every hour with automated ping/latency tests.
 
 [![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%20Hour-brightgreen?style=flat-square&logo=github)](https://github.com/ath1t/mysub)
-[![Web UI](https://img.shields.io/badge/Web%20UI-Vercel-blue?style=flat-square&logo=vercel)](https://mysub-theta.vercel.app)
+[![Web UI](https://img.shields.io/badge/Web%20UI-Vercel-blue?style=flat-square&logo=vercel)](https://ath1t-mysub.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 </div>
@@ -14,15 +14,15 @@ A curated collection of publicly available proxy node subscriptions, automatical
 
 ## 📋 Overview
 
-This project automatically aggregates, validates, and organizes public proxy subscriptions from various open-source repositories, running automatic ping/latency checks optimized for low latency. Dead nodes are purged, and active servers are categorized by geographic location.
+This project automatically aggregates, validates, and organizes public proxy subscriptions from various open-source repositories, running automatic TCP ping/latency checks optimized for low latency. Dead nodes are purged, and active servers are categorized by geographic location.
 
 ---
 
 ## 🌐 Live Web UI Dashboard
 
-> 🚀 **Access the Web Dashboard:** [https://mysub-theta.vercel.app](https://mysub-theta.vercel.app)
+> 🚀 **Access the Web Dashboard:** [https://ath1t-mysub.vercel.app](https://ath1t-mysub.vercel.app)
 > 
-> *Visit the live web app to view interactive latency charts, copy country-specific subscription links, scan QR codes instantly, and view step-by-step usage guides.*
+> *Visit the live web app to view interactive latency distribution charts, copy country-specific subscription links, scan QR codes instantly, and view step-by-step usage guides.*
 
 ---
 
