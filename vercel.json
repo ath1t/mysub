@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/sub", "dest": "https://raw.githubusercontent.com/ath1t/mysub/main/sub" },
+    { "src": "/nodes", "dest": "https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt" }
+  ]
+}
