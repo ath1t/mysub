@@ -1,7 +1,17 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/sub", "dest": "https://raw.githubusercontent.com/ath1t/mysub/main/sub" },
-    { "src": "/nodes", "dest": "https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt" }
+  "rewrites": [
+    {
+      "source": "/sub",
+      "destination": "https://raw.githubusercontent.com/ath1t/mysub/main/sub"
+    },
+    {
+      "source": "/nodes",
+      "destination": "https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt"
+    },
+    {
+      "source": "/country/:cc",
+      "destination": "https://raw.githubusercontent.com/ath1t/mysub/main/country/:cc.txt"
+    }
   ]
 }
