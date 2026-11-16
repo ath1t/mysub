@@ -7,26 +7,30 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-dark: #090d16;
-            --card-bg: #111827;
-            --border-color: #1f2937;
-            --primary: #3b82f6;
-            --primary-hover: #2563eb;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --bg-dark: #07090e;
+            --card-bg: #0d1322;
+            --border-color: #1e293b;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --success: #10b981;
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 20px;
+            padding: 40px 20px;
         }
-        .container { max-width: 800px; margin: 0 auto; }
-        header { text-align: center; padding: 30px 0; }
-        header h1 { font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(90deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .container { max-width: 760px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
         header p { color: var(--text-muted); font-size: 0.95rem; }
         
         .card {
@@ -34,61 +38,76 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
         }
-        .card h2 { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
         
-        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .card h2 { 
+            font-size: 1.05rem; 
+            font-weight: 600; 
+            margin-bottom: 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            color: var(--text-main);
+        }
+        
+        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; }
         .sub-input, select {
             flex: 1;
             min-width: 220px;
-            padding: 12px 14px;
+            padding: 10px 14px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
             background: var(--bg-dark);
             color: var(--text-main);
             font-family: monospace;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
         }
+        .sub-input:focus, select:focus { border-color: var(--primary); }
         select { font-family: inherit; cursor: pointer; }
         
         .btn {
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 8px;
             border: none;
             background: var(--primary);
             color: white;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: background 0.2s;
         }
         .btn:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-outline:hover { background: var(--border-color); }
 
         .qr-container { text-align: center; margin-top: 20px; display: none; }
-        .qr-container img { background: white; padding: 10px; border-radius: 8px; width: 180px; height: 180px; }
+        .qr-container img { background: white; padding: 8px; border-radius: 8px; width: 160px; height: 160px; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 24px; }
-        .stat-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 10px; text-align: center; }
-        .stat-val { font-size: 1.6rem; font-weight: bold; color: #60a5fa; }
-        .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+        .stat-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 12px; text-align: center; }
+        .stat-val { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-        .node-list { max-height: 250px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); }
-        .node-item { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+        .node-list { max-height: 220px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 8px; border: 1px solid var(--border-color); }
+        .node-item { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; font-family: monospace; }
         .node-item:last-child { border-bottom: none; }
-        .badge { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+        .badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 
-        /* Guide Section Styling */
-        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
-        .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 16px; border-radius: 8px; }
-        .guide-item h3 { font-size: 1rem; color: #60a5fa; margin-bottom: 8px; }
-        .guide-item p, .guide-item li { font-size: 0.85rem; color: var(--text-muted); }
-        .guide-item ul { padding-left: 18px; margin-top: 6px; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 14px; border-radius: 8px; }
+        .guide-item h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+        .guide-item p, .guide-item li { font-size: 0.8rem; color: var(--text-muted); }
+        .guide-item ul { padding-left: 16px; margin-top: 4px; }
 
-        footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 40px; }
-        footer a { color: #60a5fa; text-decoration: none; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 30px; }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -96,13 +115,13 @@
 <div class="container">
     <header>
         <h1>⚡ MySub Hub</h1>
-        <p>Auto-updated, ping-tested proxy subscriptions optimized for low latency.</p>
+        <p>Auto-updated, low-latency optimized proxy subscription links.</p>
     </header>
 
     <div class="stats-grid">
         <div class="stat-item">
             <div class="stat-val" id="totalNodes">--</div>
-            <div class="stat-label">Active Best Nodes</div>
+            <div class="stat-label">Active Nodes</div>
         </div>
         <div class="stat-item">
             <div class="stat-val" id="fastestPing">--</div>
@@ -110,93 +129,87 @@
         </div>
         <div class="stat-item">
             <div class="stat-val" id="totalCountries">--</div>
-            <div class="stat-label">Available Countries</div>
+            <div class="stat-label">Countries</div>
         </div>
     </div>
 
     <!-- Universal Subscription Card -->
     <div class="card">
-        <h2>🌐 Universal Subscription Link (Top 100)</h2>
+        <h2>🌐 Universal Subscription (Top 100)</h2>
         <div class="sub-box">
             <input type="text" id="mainSubUrl" class="sub-input" readonly>
-            <button class="btn" onclick="copyText('mainSubUrl', this)">Copy Link</button>
-            <button class="btn btn-outline" onclick="toggleQR('qrBox', 'mainSubUrl')">QR Code</button>
+            <button class="btn" onclick="copyText('mainSubUrl', this)">Copy</button>
+            <button class="btn btn-outline" onclick="toggleQR('qrBox', 'mainSubUrl')">QR</button>
         </div>
         <div class="qr-container" id="qrBox">
-            <img id="qrImage_mainSubUrl" src="" alt="Subscription QR Code">
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">Scan with V2rayNG, Shadowrocket, or NekoBox</p>
+            <img id="qrImage_mainSubUrl" src="" alt="QR Code">
         </div>
     </div>
 
     <!-- Country-Specific Subscription Card -->
     <div class="card">
         <h2>🗺️ Country Selection</h2>
-        <div class="sub-box">
+        <div class="sub-box" style="margin-bottom: 12px;">
             <select id="countrySelect" onchange="updateCountryLink()">
                 <option value="">-- Loading Countries... --</option>
             </select>
         </div>
         <div class="sub-box">
-            <input type="text" id="countrySubUrl" class="sub-input" readonly placeholder="Select a country above to generate link">
-            <button class="btn" onclick="copyText('countrySubUrl', this)">Copy Link</button>
-            <button class="btn btn-outline" onclick="toggleQR('qrCountryBox', 'countrySubUrl')">QR Code</button>
+            <input type="text" id="countrySubUrl" class="sub-input" readonly placeholder="Select a country above">
+            <button class="btn" onclick="copyText('countrySubUrl', this)">Copy</button>
+            <button class="btn btn-outline" onclick="toggleQR('qrCountryBox', 'countrySubUrl')">QR</button>
         </div>
         <div class="qr-container" id="qrCountryBox">
-            <img id="qrImage_countrySubUrl" src="" alt="Country Subscription QR Code">
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">Scan country subscription</p>
+            <img id="qrImage_countrySubUrl" src="" alt="Country QR Code">
         </div>
     </div>
 
     <!-- Latency Distribution Chart Card -->
     <div class="card">
-        <h2>📊 Latency Distribution Chart</h2>
-        <div style="position: relative; height: 220px; width: 100%;">
+        <h2>📊 Latency Distribution</h2>
+        <div style="position: relative; height: 180px; width: 100%;">
             <canvas id="latencyChart"></canvas>
         </div>
     </div>
 
     <!-- How to Use Guide Card -->
     <div class="card">
-        <h2>📖 ဘယ်လိုအသုံးပြုရမလဲ </h2>
+        <h2>📖 လမ်းညွှန်ချက် (How to Use)</h2>
         <div class="guide-grid">
             <div class="guide-item">
                 <h3>🤖 Android</h3>
-                <p>အကြံပြု App: <b>v2rayNG</b> သို့မဟုတ် <b>NekoBox</b></p>
+                <p>App: <b>v2rayNG</b> / <b>NekoBox</b></p>
                 <ul>
                     <li>Link ကို Copy ကူးပါ။</li>
-                    <li>App ထဲဝင်၍ <b>+</b> ခလုတ် သို့မဟုတ် <b>Add Subscription</b> ကိုနှိပ်ပါ။</li>
-                    <li>URL နေရာတွင် Paste လုပ်ပြီး Save လုပ်ကာ Update ဆွဲပါ။</li>
+                    <li>App ထဲတွင် + နှိပ်ပြီး Sub ထည့်ပါ။</li>
                 </ul>
             </div>
             <div class="guide-item">
-                <h3>🍎 iOS / iPhone</h3>
-                <p>အကြံပြု App: <b>Shadowrocket</b> သို့မဟုတ် <b>Stash</b></p>
+                <h3>🍎 iOS</h3>
+                <p>App: <b>Shadowrocket</b></p>
                 <ul>
-                    <li>Subscription Link ကို Copy ကူးပါ။</li>
-                    <li>App ကိုဖွင့်ပြီး <b>+</b> ခလုတ်နှိပ်ပါ (သို့) QR Code ကို Scan ဖတ်ပါ။</li>
-                    <li>Server များကို Latency စစ်ဆေးပြီး အသုံးပြုပါ။</li>
+                    <li>Link ကူးပါ သို့မဟုတ် QR Scan ဖတ်ပါ။</li>
                 </ul>
             </div>
             <div class="guide-item">
-                <h3>💻 Windows / Mac</h3>
-                <p>အကြံပြု App: <b>v2rayN</b> သို့မဟုတ် <b>Clash Verge Rev</b></p>
+                <h3>💻 PC</h3>
+                <p>App: <b>v2rayN</b> / <b>Clash</b></p>
                 <ul>
-                    <li>Universal Link ကို App ရဲ့ Subscription Settings ထဲ ထည့်ပါ။</li>
-                    <li>Remote Config ဖြင့် Update လုပ်ပါ။</li>
+                    <li>Universal Link ကို Subscription ထဲထည့်ပါ။</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="card">
-        <h2>🚀 Live Top Ping Nodes Preview</h2>
+        <h2>🚀 Live Nodes Preview</h2>
         <div class="node-list" id="nodePreviewList">
-            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading latest nodes from GitHub...</div>
+            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading nodes...</div>
         </div>
     </div>
 
     <footer>
-        Powered by <a href="https://github.com/ath1t/mysub" target="_blank">ath1t/mysub</a> • Updated Automatically via GitHub Actions
+        Powered by <a href="https://github.com/ath1t/mysub" target="_blank">ath1t/mysub</a>
     </footer>
 </div>
 
@@ -211,7 +224,7 @@
         input.select();
         navigator.clipboard.writeText(input.value);
         const originalText = btnElement.innerText;
-        btnElement.innerText = "Copied! ✓";
+        btnElement.innerText = "Copied ✓";
         btnElement.style.background = "#10b981";
         setTimeout(() => {
             btnElement.innerText = originalText;
@@ -248,12 +261,11 @@
         myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['< 50 ms', '50-100 ms', '100-200 ms', '200-500 ms', '> 500 ms'],
+                labels: ['< 50ms', '50-100ms', '100-200ms', '200-500ms', '> 500ms'],
                 datasets: [{
-                    label: 'Number of Nodes',
                     data: [brackets.l50, brackets.l100, brackets.l200, brackets.l500, brackets.gt500],
-                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#6b7280'],
-                    borderRadius: 6
+                    backgroundColor: ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#64748b'],
+                    borderRadius: 4
                 }]
             },
             options: {
@@ -261,8 +273,8 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: '#1f2937' }, ticks: { color: '#9ca3af' } },
-                    x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                    y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
+                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
                 }
             }
         });
@@ -307,9 +319,7 @@
                 document.getElementById('totalCountries').innerText = countries.length;
                 return true;
             }
-        } catch (e) {
-            console.warn("Fallback to nodes.txt parsing:", e);
-        }
+        } catch (e) {}
         return false;
     }
 
@@ -389,7 +399,7 @@
             }
         } catch (err) {
             document.getElementById('nodePreviewList').innerHTML = 
-                '<div style="text-align: center; color: #ef4444; padding: 20px;">Waiting for GitHub Actions to generate nodes.txt...</div>';
+                '<div style="text-align: center; color: #ef4444; padding: 20px;">Failed to load nodes.</div>';
         }
     }
 
