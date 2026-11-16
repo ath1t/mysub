@@ -51,6 +51,8 @@
             align-items: center; 
             justify-content: space-between;
             color: var(--text-main);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .card h2 span.title-group {
@@ -58,11 +60,17 @@
             align-items: center;
             gap: 8px;
         }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
         
-        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; }
+        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         .sub-input, select {
             flex: 1;
-            min-width: 220px;
+            min-width: 200px;
             padding: 10px 14px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
@@ -90,7 +98,11 @@
         .btn:hover { background: var(--primary-hover); }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
         .btn-outline:hover { background: var(--border-color); }
-        .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+        .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+        .btn-accent { background: #10b981; color: white; }
+        .btn-accent:hover { background: #059669; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; }
 
         .qr-container { text-align: center; margin-top: 20px; display: none; }
         .qr-container img { background: white; padding: 8px; border-radius: 8px; width: 160px; height: 160px; }
@@ -175,11 +187,12 @@
 
     <!-- Country-Specific Subscription Card -->
     <div class="card">
-        <h2><span class="title-group">🗺️ Country Selection</span></h2>
+        <h2><span class="title-group">🗺️ Country & Myanmar Best Selection</span></h2>
         <div class="sub-box" style="margin-bottom: 12px;">
             <select id="countrySelect" onchange="onCountryChange()">
-                <option value="">-- Loading Countries... --</option>
+                <option value="">-- All Countries (Default) --</option>
             </select>
+            <button class="btn btn-accent btn-sm" onclick="filterMyanmarBest()">🇲🇲 Myanmar Best (SG & TH)</button>
         </div>
         <div class="sub-box">
             <input type="text" id="countrySubUrl" class="sub-input" readonly placeholder="Select a country above">
@@ -231,7 +244,10 @@
     <div class="card">
         <h2>
             <span class="title-group">🚀 Live Nodes Preview</span>
-            <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Refresh</button>
+            <div class="header-actions">
+                <button class="btn btn-warning btn-sm" onclick="runLiveLatencyTest()">⚡ Test Latency</button>
+                <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Refresh</button>
+            </div>
         </h2>
         <div class="node-list" id="nodePreviewList">
             <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading nodes...</div>
@@ -250,6 +266,7 @@
 
     let allParsedNodes = [];
     let myChart = null;
+    let isMyanmarBestActive = false;
 
     function copyText(elementId, btnElement) {
         const input = document.getElementById(elementId);
@@ -299,7 +316,15 @@
     }
 
     function onCountryChange() {
+        isMyanmarBestActive = false;
         updateCountryLink();
+        renderNodeList();
+    }
+
+    function filterMyanmarBest() {
+        isMyanmarBestActive = true;
+        document.getElementById('countrySelect').value = "";
+        document.getElementById('countrySubUrl').value = `https://cdn.jsdelivr.net/gh/ath1t/mysub@main/country/SG.txt`;
         renderNodeList();
     }
 
@@ -342,6 +367,7 @@
     function parseProxyNode(link) {
         let protocol = "PROXY";
         let name = "Unnamed Node";
+        let serverHost = "";
 
         const protoMatch = link.match(/^([a-zA-Z0-9+-]+):\/\//);
         if (protoMatch) {
@@ -354,6 +380,7 @@
                 if (jsonStr) {
                     const obj = JSON.parse(jsonStr);
                     name = obj.ps || obj.add || "VMess Node";
+                    serverHost = obj.add || "";
                 }
             } else if (link.startsWith('ssr://')) {
                 const decoded = decodeBase64UTF8(link.slice(6));
@@ -361,16 +388,18 @@
                 if (remarkMatch) {
                     name = decodeBase64UTF8(remarkMatch[1]) || "SSR Node";
                 }
-            } else if (link.includes('#')) {
-                const rawFragment = link.split('#').slice(1).join('#');
-                try {
-                    name = decodeURIComponent(rawFragment);
-                } catch {
-                    name = rawFragment;
-                }
+                const parts = decoded.split(':');
+                if (parts.length > 0) serverHost = parts[0];
             } else {
+                if (link.includes('#')) {
+                    const rawFragment = link.split('#').slice(1).join('#');
+                    try { name = decodeURIComponent(rawFragment); } catch { name = rawFragment; }
+                }
                 const hostMatch = link.match(/@([^:/?#]+)/);
-                if (hostMatch) name = hostMatch[1];
+                if (hostMatch) {
+                    serverHost = hostMatch[1];
+                    if (!link.includes('#')) name = serverHost;
+                }
             }
         } catch (e) {
             name = "Parsed Node";
@@ -390,21 +419,16 @@
         if (pingMatch) {
             pingVal = parseFloat(pingMatch[1]);
             pingText = `${pingVal} ms`;
-            if (pingVal < 50) {
-                badgeClass = 'badge';
-            } else if (pingVal < 100) {
-                badgeClass = 'badge';
-            } else if (pingVal < 200) {
-                badgeClass = 'badge warn';
-            } else {
-                badgeClass = 'badge slow';
-            }
+            if (pingVal < 100) badgeClass = 'badge';
+            else if (pingVal < 200) badgeClass = 'badge warn';
+            else badgeClass = 'badge slow';
         }
 
         return {
             raw: link,
             protocol,
             name: name.trim() || "Unknown Node",
+            serverHost,
             countryCode,
             pingVal,
             pingText,
@@ -416,17 +440,25 @@
         const listContainer = document.getElementById('nodePreviewList');
         listContainer.innerHTML = '';
 
+        let filtered = [];
         const selectedCC = document.getElementById('countrySelect').value;
-        const filtered = selectedCC 
-            ? allParsedNodes.filter(n => n.countryCode === selectedCC)
-            : allParsedNodes;
+
+        if (isMyanmarBestActive) {
+            filtered = allParsedNodes
+                .filter(n => n.countryCode === 'SG' || n.countryCode === 'TH')
+                .sort((a, b) => a.pingVal - b.pingVal);
+        } else if (selectedCC) {
+            filtered = allParsedNodes.filter(n => n.countryCode === selectedCC);
+        } else {
+            filtered = allParsedNodes;
+        }
 
         if (filtered.length === 0) {
             listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">No nodes found for this filter.</div>';
             return;
         }
 
-        filtered.slice(0, 50).forEach(node => {
+        filtered.slice(0, 50).forEach((node, idx) => {
             const div = document.createElement('div');
             div.className = 'node-item';
 
@@ -449,6 +481,7 @@
             actionsDiv.className = 'node-actions';
 
             const badgeSpan = document.createElement('span');
+            badgeSpan.id = `badge-${idx}`;
             badgeSpan.className = node.badgeClass;
             badgeSpan.textContent = node.pingText;
 
@@ -463,6 +496,59 @@
             div.appendChild(infoDiv);
             div.appendChild(actionsDiv);
             listContainer.appendChild(div);
+        });
+    }
+
+    async function runLiveLatencyTest() {
+        const badges = document.querySelectorAll('[id^="badge-"]');
+        if (badges.length === 0) return;
+
+        badges.forEach(badge => {
+            badge.textContent = 'Testing...';
+            badge.className = 'badge warn';
+        });
+
+        // Test each visible node's domain/host using a lightweight fetch or image ping technique
+        const selectedCC = document.getElementById('countrySelect').value;
+        let filtered = isMyanmarBestActive 
+            ? allParsedNodes.filter(n => n.countryCode === 'SG' || n.countryCode === 'TH')
+            : (selectedCC ? allParsedNodes.filter(n => n.countryCode === selectedCC) : allParsedNodes);
+
+        filtered.slice(0, 50).forEach(async (node, idx) => {
+            const badge = document.getElementById(`badge-${idx}`);
+            if (!badge) return;
+
+            if (!node.serverHost) {
+                badge.textContent = 'N/A';
+                badge.className = 'badge slow';
+                return;
+            }
+
+            const startTime = performance.now();
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s timeout
+
+                // Attempt a lightweight fetch request or image ping to the host
+                await fetch(`https://${node.serverHost}/favicon.ico`, {
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                const duration = Math.round(performance.now() - startTime);
+                badge.textContent = `${duration} ms`;
+                
+                if (duration < 100) badge.className = 'badge';
+                else if (duration < 250) badge.className = 'badge warn';
+                else badge.className = 'badge slow';
+
+                node.pingVal = duration;
+            } catch (err) {
+                badge.textContent = 'Timeout';
+                badge.className = 'badge slow';
+                node.pingVal = 9999;
+            }
         });
     }
 
