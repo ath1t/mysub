@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MySub • High-Speed Proxy Hub</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        header { text-align: center; padding: 30px 0; }
+        header h1 { font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(90deg, #60a5fa, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .card h2 { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        
+        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; }
+        .sub-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn:hover { background: var(--primary-hover); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { background: var(--border-color); }
+
+        .qr-container { text-align: center; margin-top: 20px; display: none; }
+        .qr-container img { background: white; padding: 10px; border-radius: 8px; width: 180px; height: 180px; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 24px; }
+        .stat-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 10px; text-align: center; }
+        .stat-val { font-size: 1.6rem; font-weight: bold; color: #60a5fa; }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+
+        .node-list { max-height: 300px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); }
+        .node-item { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+        .node-item:last-child { border-bottom: none; }
+        .badge { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 40px; }
+        footer a { color: #60a5fa; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⚡ MySub Hub</h1>
+        <p>Auto-updated, ping-tested proxy subscriptions optimized for low latency.</p>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-val" id="totalNodes">--</div>
+            <div class="stat-label">Active Best Nodes</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-val" id="fastestPing">--</div>
+            <div class="stat-label">Fastest Ping</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-val">1 Hr</div>
+            <div class="stat-label">Auto-Update Cycle</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🔗 Universal Subscription Link (Top 100)</h2>
+        <div class="sub-box">
+            <input type="text" id="mainSubUrl" class="sub-input" readonly>
+            <button class="btn" onclick="copyText('mainSubUrl', this)">Copy Link</button>
+            <button class="btn btn-outline" onclick="toggleQR()">QR Code</button>
+        </div>
+        <div class="qr-container" id="qrBox">
+            <img id="qrImage" src="" alt="Subscription QR Code">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">Scan with V2rayNG, Shadowrocket, or NekoBox</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🚀 Live Top Ping Nodes Preview</h2>
+        <div class="node-list" id="nodePreviewList">
+            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading latest nodes from GitHub...</div>
+        </div>
+    </div>
+
+    <footer>
+        Powered by <a href="https://github.com/ath1t/mysub" target="_blank">ath1t/mysub</a> • Updated Automatically via GitHub Actions
+    </footer>
+</div>
+
+<script>
+    const subUrl = window.location.origin + '/sub';
+    document.getElementById('mainSubUrl').value = subUrl;
+    document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(subUrl)}`;
+
+    function copyText(elementId, btnElement) {
+        const input = document.getElementById(elementId);
+        input.select();
+        navigator.clipboard.writeText(input.value);
+        const originalText = btnElement.innerText;
+        btnElement.innerText = "Copied! ✓";
+        btnElement.style.background = "#10b981";
+        setTimeout(() => {
+            btnElement.innerText = originalText;
+            btnElement.style.background = "";
+        }, 2000);
+    }
+
+    function toggleQR() {
+        const qrBox = document.getElementById('qrBox');
+        qrBox.style.display = qrBox.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Fetch live nodes from GitHub to populate UI stats & preview
+    async function loadLiveNodes() {
+        try {
+            const res = await fetch('https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt');
+            if (!res.ok) throw new Error("Failed to fetch");
+            const text = await res.text();
+            const lines = text.trim().split('\n').filter(l => l.trim() !== '');
+            
+            document.getElementById('totalNodes').innerText = lines.length;
+            
+            const listContainer = document.getElementById('nodePreviewList');
+            listContainer.innerHTML = '';
+
+            let lowestPing = null;
+
+            lines.slice(0, 15).forEach(link => {
+                let name = "Unknown Node";
+                try {
+                    if (link.startsWith('vmess://')) {
+                        const jsonStr = atob(link.replace('vmess://', ''));
+                        const obj = JSON.parse(jsonStr);
+                        name = obj.ps || "VMess Node";
+                    } else if (link.includes('#')) {
+                        name = decodeURIComponent(link.split('#')[1]);
+                    }
+                } catch (e) {}
+
+                // Extract ping ms if available in name e.g. [45.2ms]
+                const pingMatch = name.match(/\[([\d.]+)ms\]/);
+                const pingText = pingMatch ? `${pingMatch[1]} ms` : 'Active';
+                if (pingMatch && (lowestPing === null || parseFloat(pingMatch[1]) < lowestPing)) {
+                    lowestPing = parseFloat(pingMatch[1]);
+                }
+
+                const div = document.createElement('div');
+                div.className = 'node-item';
+                div.innerHTML = `<span>${name}</span><span class="badge">${pingText}</span>`;
+                listContainer.appendChild(div);
+            });
+
+            if (lowestPing !== null) {
+                document.getElementById('fastestPing').innerText = lowestPing + ' ms';
+            }
+        } catch (err) {
+            document.getElementById('nodePreviewList').innerHTML = 
+                '<div style="text-align: center; color: #ef4444; padding: 20px;">Waiting for first GitHub Actions run to generate nodes.txt...</div>';
+        }
+    }
+
+    loadLiveNodes();
+</script>
+
+</body>
+</html>
