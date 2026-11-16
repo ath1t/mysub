@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MySub • High-Speed Proxy Hub</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg-dark: #090d16;
@@ -38,8 +40,8 @@
         }
         .card h2 { font-size: 1.2rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
         
-        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; }
-        .sub-input {
+        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .sub-input, select {
             flex: 1;
             min-width: 220px;
             padding: 12px 14px;
@@ -50,6 +52,8 @@
             font-family: monospace;
             font-size: 0.9rem;
         }
+        select { font-family: inherit; cursor: pointer; }
+        
         .btn {
             padding: 12px 20px;
             border-radius: 8px;
@@ -72,7 +76,7 @@
         .stat-val { font-size: 1.6rem; font-weight: bold; color: #60a5fa; }
         .stat-label { font-size: 0.85rem; color: var(--text-muted); }
 
-        .node-list { max-height: 300px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); }
+        .node-list { max-height: 250px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 10px; border: 1px solid var(--border-color); }
         .node-item { padding: 8px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
         .node-item:last-child { border-bottom: none; }
         .badge { background: rgba(16, 185, 129, 0.15); color: var(--success); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; }
@@ -104,16 +108,44 @@
         </div>
     </div>
 
+    <!-- Universal Subscription Card -->
     <div class="card">
-        <h2>🔗 Universal Subscription Link (Top 100)</h2>
+        <h2>🌐 Universal Subscription Link (Top 100)</h2>
         <div class="sub-box">
             <input type="text" id="mainSubUrl" class="sub-input" readonly>
             <button class="btn" onclick="copyText('mainSubUrl', this)">Copy Link</button>
-            <button class="btn btn-outline" onclick="toggleQR()">QR Code</button>
+            <button class="btn btn-outline" onclick="toggleQR('qrBox', 'mainSubUrl')">QR Code</button>
         </div>
         <div class="qr-container" id="qrBox">
-            <img id="qrImage" src="" alt="Subscription QR Code">
+            <img id="qrImage_mainSubUrl" src="" alt="Subscription QR Code">
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">Scan with V2rayNG, Shadowrocket, or NekoBox</p>
+        </div>
+    </div>
+
+    <!-- Country-Specific Subscription Card -->
+    <div class="card">
+        <h2>🗺️ Country Selection</h2>
+        <div class="sub-box">
+            <select id="countrySelect" onchange="updateCountryLink()">
+                <option value="">-- Select Country --</option>
+            </select>
+        </div>
+        <div class="sub-box">
+            <input type="text" id="countrySubUrl" class="sub-input" readonly placeholder="Select a country above">
+            <button class="btn" onclick="copyText('countrySubUrl', this)">Copy Link</button>
+            <button class="btn btn-outline" onclick="toggleQR('qrCountryBox', 'countrySubUrl')">QR Code</button>
+        </div>
+        <div class="qr-container" id="qrCountryBox">
+            <img id="qrImage_countrySubUrl" src="" alt="Country Subscription QR Code">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">Scan country subscription</p>
+        </div>
+    </div>
+
+    <!-- Latency Distribution Chart Card -->
+    <div class="card">
+        <h2>📊 Latency Distribution Chart</h2>
+        <div style="position: relative; height: 220px; width: 100%;">
+            <canvas id="latencyChart"></canvas>
         </div>
     </div>
 
@@ -130,12 +162,13 @@
 </div>
 
 <script>
-    const subUrl = window.location.origin + '/sub';
-    document.getElementById('mainSubUrl').value = subUrl;
-    document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(subUrl)}`;
+    const origin = window.location.origin;
+    const mainUrl = origin + '/sub';
+    document.getElementById('mainSubUrl').value = mainUrl;
 
     function copyText(elementId, btnElement) {
         const input = document.getElementById(elementId);
+        if (!input.value) return;
         input.select();
         navigator.clipboard.writeText(input.value);
         const originalText = btnElement.innerText;
@@ -147,13 +180,67 @@
         }, 2000);
     }
 
-    function toggleQR() {
-        const qrBox = document.getElementById('qrBox');
+    function toggleQR(boxId, inputId) {
+        const qrBox = document.getElementById(boxId);
+        const inputVal = document.getElementById(inputId).value;
+        if (!inputVal) return;
+        const img = document.getElementById('qrImage_' + inputId);
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(inputVal)}`;
         qrBox.style.display = qrBox.style.display === 'block' ? 'none' : 'block';
     }
 
-    // Fetch live nodes from GitHub to populate UI stats & preview
-    async function loadLiveNodes() {
+    function updateCountryLink() {
+        const select = document.getElementById('countrySelect');
+        const cc = select.value;
+        const input = document.getElementById('countrySubUrl');
+        if (cc) {
+            input.value = `${origin}/country/${cc}.txt`;
+        } else {
+            input.value = '';
+            document.getElementById('qrCountryBox').style.display = 'none';
+        }
+    }
+
+    let myChart = null;
+
+    function renderChart(brackets) {
+        const ctx = document.getElementById('latencyChart').getContext('2d');
+        if (myChart) {
+            myChart.destroy();
+        }
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['< 50 ms', '50-100 ms', '100-200 ms', '200-500 ms', '> 500 ms'],
+                datasets: [{
+                    label: 'Number of Nodes',
+                    data: [brackets.l50, brackets.l100, brackets.l200, brackets.l500, brackets.gt500],
+                    backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#6b7280'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: '#1f2937' },
+                        ticks: { color: '#9ca3af' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af' }
+                    }
+                }
+            }
+        });
+    }
+
+    async function loadData() {
         try {
             const res = await fetch('https://raw.githubusercontent.com/ath1t/mysub/main/nodes.txt');
             if (!res.ok) throw new Error("Failed to fetch");
@@ -166,8 +253,10 @@
             listContainer.innerHTML = '';
 
             let lowestPing = null;
+            const countriesSet = new Set();
+            const brackets = { l50: 0, l100: 0, l200: 0, l500: 0, gt500: 0 };
 
-            lines.slice(0, 15).forEach(link => {
+            lines.forEach(link => {
                 let name = "Unknown Node";
                 try {
                     if (link.startsWith('vmess://')) {
@@ -179,12 +268,55 @@
                     }
                 } catch (e) {}
 
-                // Extract ping ms if available in name e.g. [45.2ms]
+                // Extract country code
+                const ccMatch = name.match(/\| \S+\s+([A-Z]{2})-\d+/);
+                if (ccMatch) {
+                    countriesSet.add(ccMatch[1]);
+                }
+
+                // Extract ping ms
+                const pingMatch = name.match(/\[([\d.]+)ms\]/);
+                if (pingMatch) {
+                    const p = parseFloat(pingMatch[1]);
+                    if (lowestPing === null || p < lowestPing) {
+                        lowestPing = p;
+                    }
+                    if (p < 50) brackets.l50++;
+                    else if (p < 100) brackets.l100++;
+                    else if (p < 200) brackets.l200++;
+                    else if (p < 500) brackets.l500++;
+                    else brackets.gt500++;
+                } else {
+                    brackets.gt500++;
+                }
+            });
+
+            // Render Chart
+            renderChart(brackets);
+
+            // Populate Country Dropdown
+            const select = document.getElementById('countrySelect');
+            Array.from(countriesSet).sort().forEach(cc => {
+                const opt = document.createElement('option');
+                opt.value = cc;
+                opt.textContent = `${cc} Subscription`;
+                select.appendChild(opt);
+            });
+
+            // Populate Preview List (Top 15)
+            lines.slice(0, 15).forEach(link => {
+                let name = "Unknown Node";
+                try {
+                    if (link.startsWith('vmess://')) {
+                        const jsonStr = atob(link.replace('vmess://', ''));
+                        const obj = JSON.parse(jsonStr);
+                        name = obj.ps || "VMess Node";
+                    } else if (link.includes('#')) {
+                        name = decodeURIComponent(link.split('#')[1]);
+                    }
+                } catch (e) {}
                 const pingMatch = name.match(/\[([\d.]+)ms\]/);
                 const pingText = pingMatch ? `${pingMatch[1]} ms` : 'Active';
-                if (pingMatch && (lowestPing === null || parseFloat(pingMatch[1]) < lowestPing)) {
-                    lowestPing = parseFloat(pingMatch[1]);
-                }
 
                 const div = document.createElement('div');
                 div.className = 'node-item';
@@ -201,7 +333,7 @@
         }
     }
 
-    loadLiveNodes();
+    loadData();
 </script>
 
 </body>
