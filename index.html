@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MySub • High-Speed Proxy Hub</title>
+    <title>MySub • Terminal Hub</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-dark: #07090e;
-            --card-bg: #0d1322;
-            --border-color: #1e293b;
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-dark: #030706;
+            --card-bg: #060d0a;
+            --border-color: #00ff6633;
+            --primary: #00ff66;
+            --primary-hover: #00cc52;
+            --text-main: #00ffcc;
+            --text-muted: #4b5563;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
@@ -22,37 +22,40 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: "Courier New", Courier, monospace, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 40px 20px;
+            padding: 30px 15px;
         }
 
-        .container { max-width: 760px; margin: 0 auto; }
+        .container { max-width: 800px; margin: 0 auto; }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
-        header p { color: var(--text-muted); font-size: 0.95rem; }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 1px dashed var(--primary); padding-bottom: 20px; }
+        header h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.5px; color: var(--primary); text-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        header p { color: var(--text-muted); font-size: 0.85rem; }
         
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 4px;
+            padding: 20px;
             margin-bottom: 20px;
+            box-shadow: inset 0 0 15px rgba(0,255,102,0.02);
         }
         
         .card h2 { 
-            font-size: 1.05rem; 
+            font-size: 0.95rem; 
             font-weight: 600; 
-            margin-bottom: 16px; 
+            margin-bottom: 14px; 
             display: flex; 
             align-items: center; 
             justify-content: space-between;
-            color: var(--text-main);
+            color: var(--primary);
             flex-wrap: wrap;
             gap: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .card h2 span.title-group {
@@ -67,81 +70,83 @@
             align-items: center;
         }
         
-        .sub-box { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .sub-box { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .sub-input, select {
             flex: 1;
             min-width: 200px;
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
             border: 1px solid var(--border-color);
             background: var(--bg-dark);
             color: var(--text-main);
             font-family: monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             outline: none;
             transition: border-color 0.2s;
         }
-        .sub-input:focus, select:focus { border-color: var(--primary); }
+        .sub-input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 5px rgba(0,255,102,0.2); }
         select { font-family: inherit; cursor: pointer; }
         
         .btn {
-            padding: 10px 18px;
-            border-radius: 8px;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-weight: 500;
-            font-size: 0.9rem;
+            padding: 8px 14px;
+            border-radius: 4px;
+            border: 1px solid var(--primary);
+            background: rgba(0,255,102,0.1);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.8rem;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            font-family: monospace;
         }
-        .btn:hover { background: var(--primary-hover); }
+        .btn:hover { background: var(--primary); color: var(--bg-dark); }
         .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
-        .btn-outline:hover { background: var(--border-color); }
-        .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
-        .btn-accent { background: #10b981; color: white; }
-        .btn-accent:hover { background: #059669; }
-        .btn-warning { background: #f59e0b; color: white; }
-        .btn-warning:hover { background: #d97706; }
+        .btn-outline:hover { background: var(--border-color); color: var(--primary); }
+        .btn-sm { padding: 4px 10px; font-size: 0.75rem; }
+        .btn-accent { background: rgba(16, 185, 129, 0.2); border-color: var(--success); color: var(--success); }
+        .btn-accent:hover { background: var(--success); color: var(--bg-dark); }
+        .btn-warning { background: rgba(245, 158, 11, 0.2); border-color: var(--warning); color: var(--warning); }
+        .btn-warning:hover { background: var(--warning); color: var(--bg-dark); }
 
-        .qr-container { text-align: center; margin-top: 20px; display: none; }
-        .qr-container img { background: white; padding: 8px; border-radius: 8px; width: 160px; height: 160px; }
+        .qr-container { text-align: center; margin-top: 15px; display: none; }
+        .qr-container img { background: white; padding: 6px; border-radius: 4px; width: 140px; height: 140px; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
-        .stat-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px; border-radius: 12px; text-align: center; }
-        .stat-val { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
-        .stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-item { background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 4px; text-align: center; }
+        .stat-val { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; }
 
-        .node-list { max-height: 320px; overflow-y: auto; background: var(--bg-dark); border-radius: 8px; padding: 8px; border: 1px solid var(--border-color); }
-        .node-item { padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: monospace; }
+        .node-list { max-height: 300px; overflow-y: auto; background: var(--bg-dark); border-radius: 4px; padding: 6px; border: 1px solid var(--border-color); }
+        .node-item { padding: 8px 10px; border-bottom: 1px dashed var(--border-color); font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: monospace; }
         .node-item:last-child { border-bottom: none; }
         .node-info { display: flex; align-items: center; gap: 8px; overflow: hidden; flex: 1; }
         .node-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main); }
         
-        .node-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .node-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
         .proto-tag {
-            background: rgba(99, 102, 241, 0.15);
-            color: #818cf8;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.7rem;
+            background: rgba(0,255,102,0.1);
+            color: var(--primary);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.65rem;
             font-weight: 700;
             text-transform: uppercase;
             flex-shrink: 0;
+            border: 1px solid var(--border-color);
         }
 
-        .badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; flex-shrink: 0; }
-        .badge.warn { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-        .badge.slow { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+        .badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; font-weight: 600; flex-shrink: 0; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge.warn { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
+        .badge.slow { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
 
-        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-        .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 14px; border-radius: 8px; }
-        .guide-item h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
-        .guide-item p, .guide-item li { font-size: 0.8rem; color: var(--text-muted); }
-        .guide-item ul { padding-left: 16px; margin-top: 4px; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+        .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 12px; border-radius: 4px; }
+        .guide-item h3 { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+        .guide-item p, .guide-item li { font-size: 0.75rem; color: #9ca3af; }
+        .guide-item ul { padding-left: 14px; margin-top: 2px; }
 
-        footer { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: 30px; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 15px; }
         footer a { color: var(--primary); text-decoration: none; }
 
         @media (max-width: 600px) {
@@ -153,8 +158,8 @@
 
 <div class="container">
     <header>
-        <h1>⚡ MySub Hub</h1>
-        <p>Auto-updated, low-latency optimized proxy subscription links.</p>
+        <h1>root@mysub:~# _</h1>
+        <p>[::] auto-updated low-latency proxy hub [::]</p>
     </header>
 
     <div class="stats-grid">
@@ -174,7 +179,7 @@
 
     <!-- Universal Subscription Card -->
     <div class="card">
-        <h2><span class="title-group">🌐 Universal Subscription (Top 100)</span></h2>
+        <h2><span class="title-group">> sys.sub.universal (Top 100)</span></h2>
         <div class="sub-box">
             <input type="text" id="mainSubUrl" class="sub-input" readonly>
             <button class="btn" onclick="copyText('mainSubUrl', this)">Copy</button>
@@ -187,12 +192,12 @@
 
     <!-- Country-Specific Subscription Card -->
     <div class="card">
-        <h2><span class="title-group">🗺️ Country & Myanmar Best Selection</span></h2>
-        <div class="sub-box" style="margin-bottom: 12px;">
+        <h2><span class="title-group">> sys.sub.filter</span></h2>
+        <div class="sub-box" style="margin-bottom: 10px;">
             <select id="countrySelect" onchange="onCountryChange()">
                 <option value="">-- All Countries (Default) --</option>
             </select>
-            <button class="btn btn-accent btn-sm" onclick="filterMyanmarBest()">🇲🇲 Myanmar Best (SG & TH)</button>
+            <button class="btn btn-accent btn-sm" onclick="filterMyanmarBest()">[::] Myanmar Best (SG/TH)</button>
         </div>
         <div class="sub-box">
             <input type="text" id="countrySubUrl" class="sub-input" readonly placeholder="Select a country above">
@@ -206,36 +211,36 @@
 
     <!-- Latency Distribution Chart Card -->
     <div class="card">
-        <h2><span class="title-group">📊 Latency Distribution</span></h2>
-        <div style="position: relative; height: 180px; width: 100%;">
+        <h2><span class="title-group">> analytics.latency_dist</span></h2>
+        <div style="position: relative; height: 160px; width: 100%;">
             <canvas id="latencyChart"></canvas>
         </div>
     </div>
 
     <!-- How to Use Guide Card -->
     <div class="card">
-        <h2><span class="title-group">📖 လမ်းညွှန်ချက် (How to Use)</span></h2>
+        <h2><span class="title-group">> sys.docs.guide</span></h2>
         <div class="guide-grid">
             <div class="guide-item">
-                <h3>🤖 Android</h3>
+                <h3>[ Android ]</h3>
                 <p>App: <b>v2rayNG</b> / <b>NekoBox</b></p>
                 <ul>
-                    <li>Link ကို Copy ကူးပါ။</li>
-                    <li>App ထဲတွင် + နှိပ်ပြီး Sub ထည့်ပါ။</li>
+                    <li>Link ကူးပါ။</li>
+                    <li>App ထဲတွင် Sub ထည့်ပါ။</li>
                 </ul>
             </div>
             <div class="guide-item">
-                <h3>🍎 iOS</h3>
+                <h3>[ iOS ]</h3>
                 <p>App: <b>Shadowrocket</b></p>
                 <ul>
-                    <li>Link ကူးပါ သို့မဟုတ် QR Scan ဖတ်ပါ။</li>
+                    <li>Link ကူးပါ သို့မဟုတ် QR Scan ။</li>
                 </ul>
             </div>
             <div class="guide-item">
-                <h3>💻 PC</h3>
+                <h3>[ PC ]</h3>
                 <p>App: <b>v2rayN</b> / <b>Clash</b></p>
                 <ul>
-                    <li>Universal Link ကို Subscription ထဲထည့်ပါ။</li>
+                    <li>Universal Sub ထည့်ပါ။</li>
                 </ul>
             </div>
         </div>
@@ -243,19 +248,19 @@
 
     <div class="card">
         <h2>
-            <span class="title-group">🚀 Live Nodes Preview</span>
+            <span class="title-group">> nodes.live_preview</span>
             <div class="header-actions">
-                <button class="btn btn-warning btn-sm" onclick="runLiveLatencyTest()">⚡ Test Latency</button>
-                <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Refresh</button>
+                <button class="btn btn-warning btn-sm" onclick="runLiveLatencyTest()">⚡ Test</button>
+                <button class="btn btn-outline btn-sm" onclick="loadData()">↻ Sync</button>
             </div>
         </h2>
         <div class="node-list" id="nodePreviewList">
-            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Loading nodes...</div>
+            <div style="text-align: center; color: var(--text-muted); padding: 20px;">Fetching nodes...</div>
         </div>
     </div>
 
     <footer>
-        Powered by <a href="https://github.com/ath1t/mysub" target="_blank">ath1t/mysub</a>
+        powered by <a href="https://github.com/ath1t/mysub" target="_blank">thio’s project</a>
     </footer>
 </div>
 
@@ -274,11 +279,13 @@
         input.select();
         navigator.clipboard.writeText(input.value);
         const originalText = btnElement.innerText;
-        btnElement.innerText = "Copied ✓";
-        btnElement.style.background = "#10b981";
+        btnElement.innerText = "OK ✓";
+        btnElement.style.background = "#00ff66";
+        btnElement.style.color = "#030706";
         setTimeout(() => {
             btnElement.innerText = originalText;
             btnElement.style.background = "";
+            btnElement.style.color = "";
         }, 2000);
     }
 
@@ -286,11 +293,13 @@
         if (!text) return;
         navigator.clipboard.writeText(text);
         const originalText = btnElement.innerText;
-        btnElement.innerText = "Copied ✓";
-        btnElement.style.background = "#10b981";
+        btnElement.innerText = "OK ✓";
+        btnElement.style.background = "#00ff66";
+        btnElement.style.color = "#030706";
         setTimeout(() => {
             btnElement.innerText = originalText;
             btnElement.style.background = "";
+            btnElement.style.color = "";
         }, 1500);
     }
 
@@ -337,8 +346,8 @@
                 labels: ['< 50ms', '50-100ms', '100-200ms', '200-500ms', '> 500ms'],
                 datasets: [{
                     data: [brackets.l50, brackets.l100, brackets.l200, brackets.l500, brackets.gt500],
-                    backgroundColor: ['#10b981', '#6366f1', '#f59e0b', '#ef4444', '#64748b'],
-                    borderRadius: 4
+                    backgroundColor: ['#00ff66', '#3b82f6', '#f59e0b', '#ef4444', '#374151'],
+                    borderRadius: 2
                 }]
             },
             options: {
@@ -346,8 +355,8 @@
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
-                    x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+                    y: { beginAtZero: true, grid: { color: '#00ff6611' }, ticks: { color: '#4b5563', font: { size: 10 } } },
+                    x: { grid: { display: false }, ticks: { color: '#4b5563', font: { size: 10 } } }
                 }
             }
         });
@@ -454,7 +463,7 @@
         }
 
         if (filtered.length === 0) {
-            listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">No nodes found for this filter.</div>';
+            listContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 20px;">[!] No nodes found.</div>';
             return;
         }
 
@@ -504,7 +513,7 @@
         if (badges.length === 0) return;
 
         badges.forEach(badge => {
-            badge.textContent = 'Testing...';
+            badge.textContent = 'ping...';
             badge.className = 'badge warn';
         });
 
@@ -518,7 +527,7 @@
             if (!badge) return;
 
             if (!node.serverHost) {
-                badge.textContent = 'N/A';
+                badge.textContent = 'ERR';
                 badge.className = 'badge slow';
                 return;
             }
@@ -539,7 +548,7 @@
                     else badge.className = 'badge slow';
                     node.pingVal = duration;
                 } else {
-                    badge.textContent = 'Timeout';
+                    badge.textContent = 'TIMEOUT';
                     badge.className = 'badge slow';
                     node.pingVal = 9999;
                 }
@@ -658,7 +667,7 @@
         } catch (err) {
             listContainer.innerHTML = `
                 <div style="text-align: center; color: #ef4444; padding: 20px;">
-                    <p style="margin-bottom: 10px;">Failed to load nodes (${err.message}).</p>
+                    <p style="margin-bottom: 10px;">[!] Failed to load nodes (${err.message}).</p>
                     <button class="btn btn-outline btn-sm" onclick="loadData()">Try Again</button>
                 </div>`;
         }
