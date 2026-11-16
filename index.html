@@ -140,7 +140,7 @@
         .badge.warn { background: rgba(245, 158, 11, 0.1); color: var(--warning); border-color: rgba(245, 158, 11, 0.3); }
         .badge.slow { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
 
-        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
         .guide-item { background: var(--bg-dark); border: 1px solid var(--border-color); padding: 12px; border-radius: 4px; }
         .guide-item h3 { font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
         .guide-item p, .guide-item li { font-size: 0.75rem; color: #9ca3af; }
@@ -148,6 +148,7 @@
 
         footer { text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 15px; }
         footer a { color: var(--primary); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr; }
@@ -219,28 +220,28 @@
 
     <!-- How to Use Guide Card -->
     <div class="card">
-        <h2><span class="title-group">> sys.docs.guide</span></h2>
+        <h2><span class="title-group">> sys.docs.multi_platform_guide</span></h2>
         <div class="guide-grid">
+            <div class="guide-item">
+                <h3>[ Universal Client ]</h3>
+                <p>App: <b>Hiddify</b> (Cross-Platform)</p>
+                <ul>
+                    <li>Supports: Windows, macOS, Linux, Android, iOS</li>
+                    <li>Sub Link ကို Add ၍ တစ်င်တည်း သုံးပါ။</li>
+                </ul>
+            </div>
             <div class="guide-item">
                 <h3>[ Android ]</h3>
                 <p>App: <b>v2rayNG</b> / <b>NekoBox</b></p>
                 <ul>
-                    <li>Link ကူးပါ။</li>
-                    <li>App ထဲတွင် Sub ထည့်ပါ။</li>
+                    <li>Link ကူးပါ။ App ထဲတွင် Add ပါ။</li>
                 </ul>
             </div>
             <div class="guide-item">
-                <h3>[ iOS ]</h3>
-                <p>App: <b>Shadowrocket</b></p>
+                <h3>[ iOS & PC ]</h3>
+                <p>App: <b>Shadowrocket</b> / <b>Clash</b></p>
                 <ul>
-                    <li>Link ကူးပါ သို့မဟုတ် QR Scan ။</li>
-                </ul>
-            </div>
-            <div class="guide-item">
-                <h3>[ PC ]</h3>
-                <p>App: <b>v2rayN</b> / <b>Clash</b></p>
-                <ul>
-                    <li>Universal Sub ထည့်ပါ။</li>
+                    <li>Sub Link သို့မဟုတ် QR Scan သုံးပါ။</li>
                 </ul>
             </div>
         </div>
@@ -260,7 +261,7 @@
     </div>
 
     <footer>
-        powered by <a href="https://github.com/ath1t/mysub" target="_blank">thio’s project</a>
+        powered by <a href="https://github.com/ath1t" target="_blank" rel="noopener noreferrer">thio’s project</a>
     </footer>
 </div>
 
