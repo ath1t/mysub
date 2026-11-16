@@ -428,7 +428,7 @@
             raw: link,
             protocol,
             name: name.trim() || "Unknown Node",
-            serverHost,
+            serverHost: serverHost ? serverHost.split(':')[0] : '',
             countryCode,
             pingVal,
             pingText,
@@ -508,7 +508,6 @@
             badge.className = 'badge warn';
         });
 
-        // Test each visible node's domain/host using a lightweight fetch or image ping technique
         const selectedCC = document.getElementById('countrySelect').value;
         let filtered = isMyanmarBestActive 
             ? allParsedNodes.filter(n => n.countryCode === 'SG' || n.countryCode === 'TH')
@@ -525,30 +524,34 @@
             }
 
             const startTime = performance.now();
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s timeout
+            const img = new Image();
+            let resolved = false;
 
-                // Attempt a lightweight fetch request or image ping to the host
-                await fetch(`https://${node.serverHost}/favicon.ico`, {
-                    mode: 'no-cors',
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-
+            const finishTest = (isSuccess) => {
+                if (resolved) return;
+                resolved = true;
                 const duration = Math.round(performance.now() - startTime);
-                badge.textContent = `${duration} ms`;
-                
-                if (duration < 100) badge.className = 'badge';
-                else if (duration < 250) badge.className = 'badge warn';
-                else badge.className = 'badge slow';
 
-                node.pingVal = duration;
-            } catch (err) {
-                badge.textContent = 'Timeout';
-                badge.className = 'badge slow';
-                node.pingVal = 9999;
-            }
+                if (isSuccess && duration < 3000) {
+                    badge.textContent = `${duration} ms`;
+                    if (duration < 100) badge.className = 'badge';
+                    else if (duration < 250) badge.className = 'badge warn';
+                    else badge.className = 'badge slow';
+                    node.pingVal = duration;
+                } else {
+                    badge.textContent = 'Timeout';
+                    badge.className = 'badge slow';
+                    node.pingVal = 9999;
+                }
+            };
+
+            img.onload = () => finishTest(true);
+            img.onerror = () => finishTest(true);
+            img.src = `https://${node.serverHost}/favicon.ico?t=` + Date.now();
+
+            setTimeout(() => {
+                if (!resolved) finishTest(false);
+            }, 3500);
         });
     }
 
