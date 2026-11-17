@@ -4,7 +4,7 @@
 
 A curated collection of publicly available proxy node subscriptions, automatically updated every hour with automated ping/latency tests.
 
-[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%206Hour-brightgreen?style=flat-square&logo=github)](https://github.com/ath1t/mysub)
+[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%206Hours-brightgreen?style=flat-square&logo=github)](https://github.com/ath1t/mysub)
 [![Web UI](https://img.shields.io/badge/Web%20UI-Vercel-blue?style=flat-square&logo=vercel)](https://ath1t-mysub.vercel.app)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
