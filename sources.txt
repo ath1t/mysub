@@ -1,10 +1,7 @@
 # One subscription URL per line. Only public sources.
 
 # barry-far/V2ray-Config (MIT)
-https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub1.txt
-https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub2.txt
-https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub3.txt
-https://raw.githubusercontent.com/barry-far/V2ray-config/main/Sub4.txt
+https://raw.githubusercontent.com/barry-far/V2ray-config/main/All_Configs_base64_Sub.txt
 
 # zhuhaiuk/free-nodes
 https://raw.githubusercontent.com/zhuhaiuk/free-nodes/main/nodes.txt
