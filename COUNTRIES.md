@@ -12,61 +12,62 @@ Fastest 100 TCP nodes: `https://raw.githubusercontent.com/ath1t/mysub/main/top10
 | 🇩🇪 Germany (DE) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/DE.txt` |
 | 🇫🇷 France (FR) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/FR.txt` |
 | 🇬🇧 United Kingdom (GB) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/GB.txt` |
-| 🇭🇰 Hong Kong (HK) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/HK.txt` |
 | 🇳🇱 The Netherlands (NL) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/NL.txt` |
 | 🇷🇺 Russia (RU) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/RU.txt` |
 | 🇸🇬 Singapore (SG) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SG.txt` |
 | 🇺🇸 United States (US) | 100 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/US.txt` |
-| 🇨🇭 Switzerland (CH) | 72 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CH.txt` |
-| 🇯🇵 Japan (JP) | 70 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/JP.txt` |
-| 🇮🇷 Iran (IR) | 69 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IR.txt` |
-| 🇹🇷 Türkiye (TR) | 68 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/TR.txt` |
-| 🇰🇷 South Korea (KR) | 65 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/KR.txt` |
-| 🇸🇪 Sweden (SE) | 51 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SE.txt` |
-| 🇦🇪 United Arab Emirates (AE) | 46 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AE.txt` |
-| 🇪🇸 Spain (ES) | 45 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/ES.txt` |
-| 🇮🇹 Italy (IT) | 41 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IT.txt` |
-| 🇫🇮 Finland (FI) | 40 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/FI.txt` |
-| 🇸🇨 Seychelles (SC) | 38 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SC.txt` |
-| 🇹🇼 Taiwan (TW) | 32 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/TW.txt` |
-| 🇦🇹 Austria (AT) | 27 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AT.txt` |
+| 🇭🇰 Hong Kong (HK) | 97 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/HK.txt` |
+| 🇨🇭 Switzerland (CH) | 83 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CH.txt` |
+| 🇹🇷 Türkiye (TR) | 69 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/TR.txt` |
+| 🇮🇷 Iran (IR) | 68 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IR.txt` |
+| 🇯🇵 Japan (JP) | 67 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/JP.txt` |
+| 🇰🇷 South Korea (KR) | 66 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/KR.txt` |
+| 🇫🇮 Finland (FI) | 60 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/FI.txt` |
+| 🇸🇪 Sweden (SE) | 58 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SE.txt` |
+| 🇪🇸 Spain (ES) | 53 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/ES.txt` |
+| 🇸🇨 Seychelles (SC) | 49 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SC.txt` |
+| 🇦🇪 United Arab Emirates (AE) | 47 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AE.txt` |
+| 🇮🇹 Italy (IT) | 42 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IT.txt` |
+| 🇹🇼 Taiwan (TW) | 36 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/TW.txt` |
+| 🇦🇹 Austria (AT) | 31 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AT.txt` |
+| 🇵🇱 Poland (PL) | 28 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/PL.txt` |
 | 🇧🇬 Bulgaria (BG) | 27 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BG.txt` |
-| 🇵🇱 Poland (PL) | 26 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/PL.txt` |
-| 🇪🇪 Estonia (EE) | 23 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/EE.txt` |
-| 🇮🇳 India (IN) | 20 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IN.txt` |
-| 🇷🇸 Serbia (RS) | 14 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/RS.txt` |
-| 🇧🇷 Brazil (BR) | 12 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BR.txt` |
-| 🇰🇿 Kazakhstan (KZ) | 12 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/KZ.txt` |
-| 🇱🇹 Lithuania (LT) | 12 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/LT.txt` |
-| 🇧🇾 Belarus (BY) | 11 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BY.txt` |
+| 🇮🇳 India (IN) | 21 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IN.txt` |
+| 🇧🇷 Brazil (BR) | 18 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BR.txt` |
+| 🇨🇿 Czechia (CZ) | 16 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CZ.txt` |
+| 🇷🇸 Serbia (RS) | 16 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/RS.txt` |
+| 🇪🇪 Estonia (EE) | 15 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/EE.txt` |
+| 🇰🇿 Kazakhstan (KZ) | 13 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/KZ.txt` |
 | 🇮🇱 Israel (IL) | 11 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IL.txt` |
-| 🇷🇴 Romania (RO) | 11 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/RO.txt` |
-| 🇨🇿 Czechia (CZ) | 7 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CZ.txt` |
-| 🇳🇴 Norway (NO) | 7 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/NO.txt` |
+| 🇱🇹 Lithuania (LT) | 11 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/LT.txt` |
+| 🇷🇴 Romania (RO) | 10 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/RO.txt` |
+| 🇧🇾 Belarus (BY) | 9 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BY.txt` |
+| 🇱🇻 Latvia (LV) | 7 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/LV.txt` |
+| 🇺🇦 Ukraine (UA) | 7 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/UA.txt` |
 | 🇨🇱 Chile (CL) | 6 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CL.txt` |
 | 🇮🇪 Ireland (IE) | 6 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IE.txt` |
 | 🇱🇺 Luxembourg (LU) | 6 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/LU.txt` |
-| 🇿🇦 South Africa (ZA) | 6 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/ZA.txt` |
+| 🇳🇴 Norway (NO) | 6 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/NO.txt` |
 | 🇦🇺 Australia (AU) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AU.txt` |
 | 🇧🇪 Belgium (BE) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BE.txt` |
-| 🇨🇷 Costa Rica (CR) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CR.txt` |
-| 🇱🇻 Latvia (LV) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/LV.txt` |
+| 🇩🇰 Denmark (DK) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/DK.txt` |
 | 🇲🇾 Malaysia (MY) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/MY.txt` |
-| 🇨🇾 Cyprus (CY) | 4 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CY.txt` |
+| 🇿🇦 South Africa (ZA) | 5 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/ZA.txt` |
 | 🇬🇷 Greece (GR) | 4 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/GR.txt` |
-| 🇺🇦 Ukraine (UA) | 4 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/UA.txt` |
 | 🇻🇳 Vietnam (VN) | 4 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/VN.txt` |
-| 🇦🇲 Armenia (AM) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AM.txt` |
+| 🇧🇿 Belize (BZ) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BZ.txt` |
+| 🇨🇷 Costa Rica (CR) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CR.txt` |
+| 🇨🇾 Cyprus (CY) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CY.txt` |
 | 🇲🇩 Moldova (MD) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/MD.txt` |
-| 🇸🇮 Slovenia (SI) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SI.txt` |
 | 🇹🇭 Thailand (TH) | 3 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/TH.txt` |
-| 🇩🇰 Denmark (DK) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/DK.txt` |
+| 🇦🇲 Armenia (AM) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/AM.txt` |
+| 🇨🇳 China (CN) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CN.txt` |
 | 🇭🇺 Hungary (HU) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/HU.txt` |
-| 🇲🇭 Marshall Islands (MH) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/MH.txt` |
-| 🇧🇿 Belize (BZ) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/BZ.txt` |
-| 🇨🇳 China (CN) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/CN.txt` |
+| 🇸🇮 Slovenia (SI) | 2 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/SI.txt` |
 | 🇮🇶 Iraq (IQ) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IQ.txt` |
 | 🇮🇸 Iceland (IS) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/IS.txt` |
+| 🇲🇭 Marshall Islands (MH) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/MH.txt` |
+| 🇲🇽 Mexico (MX) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/MX.txt` |
 | 🇳🇿 New Zealand (NZ) | 1 | `https://raw.githubusercontent.com/ath1t/mysub/main/country/NZ.txt` |
 
 ## Latency ranking
